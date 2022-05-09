@@ -233,10 +233,27 @@ class AWSConstruct:
         cursor = db_connection.cursor()
 
         try:
-            cursor.execute(f"""USE {database};""")
+            cursor.execute(f"""USE {database}""")
             return cursor.execute(f"""SELECT COUNT(*) FROM {table_name};""")
         except:
             return print(f"task failed successfully!")
+
+    def check_for_duplicates(self, dataframe):
+        """
+        This will run through the dataset to check for duplications
+        :param dataframe:
+        :return:
+        """
+        return print(dataframe.duplicated().value_counts())
+
+    def drop_duplicates(self, dataframe):
+        """
+        This will drop duplicates, but keep the first occurence.
+        :param dataframe:
+        :return:
+        """
+        return dataframe.drop_duplicates(keep='first')
+
 
 
     def sql_disconnect(self, db_connection):
